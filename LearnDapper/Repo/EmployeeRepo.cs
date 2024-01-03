@@ -54,6 +54,23 @@ namespace LearnDapper.Repo
             return response;
         }
 
+        async Task<List<Object>> IEmployeeRepo.GetAllByDepartment(string department_name)
+        {
+            /* string query = "EXEC hcm.getEmployeesByDepartment @dept_name";
+             using (var connection = this.context.CreateConnection())
+             {
+                 var emplist = await connection.QueryAsync<Employee>(query, new { dept_name });
+                 return emplist.ToList();
+             }*/
+
+            string query = "hcm.getEmployeesByDepartment";
+            using (var connection = this.context.CreateConnection())
+            {
+                var emplist = await connection.QueryAsync<Object>(query, new { department_name }, commandType: CommandType.StoredProcedure);
+                return emplist.ToList();
+            }
+        }
+
         async Task<Employee> IEmployeeRepo.GetOneById(int emp_id)
         {
             string query = "SELECT * FROM hcm.employees where employee_id=@emp_id";

@@ -39,6 +39,18 @@ namespace LearnDapper.Controllers
             else {
                 return NotFound();
             }
+        }         
+        [HttpGet("GetAllByDepartment/{dept_name}")]
+        public async Task<ActionResult> GetAllByDepartment(string dept_name) 
+        { 
+            var _list = await repo.GetAllByDepartment(dept_name);
+            if (_list != null)
+            {
+                return Ok(_list);
+            }
+            else {
+                return NotFound();
+            }
         }        
         
         [HttpPost("Create")]
